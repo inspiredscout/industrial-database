@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  postgres:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: xuylo
+      POSTGRES_DB: real_estate
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+  pgadmin:
+    build:
+      context: .
+      dockerfile: Dockerfile  # Путь к вашему Dockerfile
+    ports:
+      - "5050:80"  # Проксирование порта контейнера pgAdmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+
+volumes:
+  pgdata:
